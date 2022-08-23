@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\Request\CsrfValidator">
+        <plugin name="csrf_validator_skip" type="Simpl\Splitpay\Plugin\CsrfValidatorSkip" />
+    </type>
+
+    <preference for="Magento\Sales\Model\Order\Email\Sender\OrderSender" type="Simpl\Splitpay\Model\Order\EmailSender"/>
+    <preference for="Magento\Sales\Model\Order\Payment" type="Simpl\Splitpay\Model\Order\PaymentPlace"/>
+
+    <type name="Simpl\Splitpay\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Simpl\Splitpay\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">simplLoggerTrack</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Simpl\Splitpay\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

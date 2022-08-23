@@ -1,0 +1,37 @@
+{
+    "name": "getsimpl/module-splitpay",
+    "description": "Simpl Splitpay Payment Gateway",
+    "require": {
+        "php": "~5.5.0|~5.6.0|7.*|8.*"
+    },
+    "keywords": [
+        "getSimpl",
+        "magento",
+        "payments",
+        "india",
+        "payment gateway",
+        "pay-in-3"
+    ],
+    "homepage": "https://getsimpl.com",
+    "authors": [
+        {
+            "name": "Simpl Team",
+            "homepage": "https://getsimpl.com/about-us/",
+            "email": "krunal.lakhatariya@getsimpl.com"
+        }
+    ],
+    "type": "magento2-module",
+    "version": "1.4.3",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Simpl\\Splitpay\\": ""
+        }
+    }
+}

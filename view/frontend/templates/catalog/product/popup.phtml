@@ -1,0 +1,38 @@
+<?php
+$product = $block->getProduct();
+$finalPriceAmt = $product->getPriceInfo()->getPrice('final_price')->getValue();
+$formattedPrice = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($finalPriceAmt,true,false);
+?>
+<div class='splitpay' style = "display:none;"><?= $block->getInfoHtml($formattedPrice); ?></div>
+<script>
+    window.enabledfor = <?= $block->escapeHtml($block->getEnabledFor()); ?>;
+    window.minPriceLimit = '<?= $block->getMinPriceConfig();?>';
+    window.maxPriceLimit = '<?= $block->getMaxPriceValue();?>';
+</script>
+<script type="text/javascript" xml="space">
+    require([
+        'jquery',
+        'featherlight'
+    ],
+    function($,featherlight) {
+        $( document ).on(
+            'click',
+            'a.simpl-popup-link',
+            function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        'action': 'PRODUCT_INTERSTITIAL_VIEW',
+                        'product_id': '<?= $block->escapeHtml($product->getId()); ?>'
+                    },
+                    url: '<?= $block->escapeUrl($block->getUrl('splitpay/payment/event')); ?>',
+                    success: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+        );
+    });
+</script>

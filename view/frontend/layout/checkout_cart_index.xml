@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<css src="Simpl_Splitpay::css/styles.css"/>
+        <css src="Simpl_Splitpay::css/featherlight.css"/>
+	</head>
+    <body>        
+        <referenceBlock name="checkout.cart.methods">            
+            <block class="Simpl\Splitpay\Block\Popup" name="splitpay.msg.cartpage" template="Simpl_Splitpay::checkout/cart/popup.phtml">
+            </block>
+        </referenceBlock>
+    </body>
+</page>

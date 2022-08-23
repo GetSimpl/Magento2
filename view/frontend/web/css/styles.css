@@ -1,0 +1,244 @@
+body.catalog-product-view .splitpay,body.checkout-cart-index .splitpay,body.checkout-index-index .splitpay {padding: 5px 0px;margin: 5px 0px;font-size: 12px;font-weight: 500;text-align: left;}
+body.catalog-product-view .splitpay svg,body.checkout-cart-index .splitpay svg,body.checkout-index-index .splitpay svg {width: 60px;vertical-align: middle;margin-left: 5px;}
+body.catalog-product-view .splitpay svg:nth-child(2),body.checkout-cart-index .splitpay svg:nth-child(2){width: 55px;}
+body.checkout-index-index .splitpay svg:nth-child(2){width:60px;}
+body.catalog-product-view .simpl-popup-link svg, body.checkout-cart-index .simpl-popup-link svg, body.checkout-index-index .simpl-popup-link svg  {width: 15px;}
+body.checkout-index-index .splitpaycheckoutaction .field .control._with-tooltip{right: 0px; top: 10px;}
+body.checkout-index-index .splitpaycheckoutaction .action.primary{margin-right: 30px;}
+body.checkout-index-index .splitpaycheckoutaction .action.primary, body.checkout-index-index .splitpaycheckoutaction .action.primary:hover{background: #00D1C1; border: 1px solid #00D1C1;}
+
+@media (max-width: 767px) {
+    body.checkout-index-index .splitpaycheckoutaction .action.primary{margin-right: 0px; width : 82%;}
+}
+
+html.with-featherlight {
+	/* disable global scrolling when featherlights are visible */
+	overflow: hidden;
+}
+@-webkit-keyframes featherlightLoader {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes featherlightLoader {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.featherlight .featherlight-content{
+	position: relative;
+	min-width:100px;
+	min-height:100px;
+}
+.featherlight-loading .featherlight-content{
+	width: 52px;
+	height: 60px;
+	background: none;
+	overflow: hidden;
+	margin: 0;
+}
+
+.featherlight .featherlight-content:before {
+	position: absolute;
+	box-sizing: border-box;
+	display: block;
+	content:'';
+	-webkit-animation: featherlightLoader 1s infinite linear;
+	animation: featherlightLoader 1s infinite linear;
+	background: transparent;
+	border: 8px solid #8f8f8f;
+	border-left-color: #fff;
+	border-radius: 40px;
+	width: 40px;
+	height: 40px;
+	min-width: 0;
+	top: calc(50% - 20px);
+	left:calc(50% - 20px);
+	z-index: 0;
+}
+.featherlight .featherlight-content img{
+	z-index: 1;
+	position:relative;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.featherlight-previous,
+.featherlight-next{
+	z-index: 2;
+}
+.featherlight-loading .featherlight-content > * {
+	display: none !important;
+}
+
+.featherlight-loading .featherlight-close,
+.featherlight-loading .featherlight-inner {
+	display: none;
+}
+.featherlight {
+	display: none;
+
+	/* dimensions: spanning the background from edge to edge */
+	position:fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 2147483647; /* z-index needs to be >= elements on the site. */
+
+	/* position: centering content */
+	text-align: center;
+
+	/* insures that the ::before pseudo element doesn't force wrap with fixed width content; */
+	white-space: nowrap;
+
+	/* styling */
+	cursor: pointer;
+	background: #333;
+	/* IE8 "hack" for nested featherlights */
+	background: rgba(0, 0, 0, 0);
+}
+
+/* support for nested featherlights. Does not work in IE8 (use JS to fix) */
+.featherlight:last-of-type {
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.featherlight:before {
+	/* position: trick to center content vertically */
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.featherlight .featherlight-content {
+	/* make content container for positioned elements (close button) */
+	position: relative;
+
+	/* position: centering vertical and horizontal */
+	text-align: left;
+	vertical-align: middle;
+	display: inline-block;
+
+	/* dimensions: cut off images */
+	overflow: auto;
+	padding:0 !important;
+	margin-top:10px;
+	border-bottom: 0px solid transparent !important;
+
+	/* dimensions: handling large content */
+	margin-left: 5%;
+	margin-right: 5%;
+	max-height: 95%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	border-radius: 10px;    
+    
+	/* styling */
+	background: #fff;
+	cursor: auto;
+
+	/* reset white-space wrapping */
+	white-space: normal;
+}
+
+/* contains the content */
+.featherlight .featherlight-inner {
+	/* make sure its visible */
+	display: block;
+}
+
+/* don't show these though */
+.featherlight script.featherlight-inner,
+.featherlight link.featherlight-inner,
+.featherlight style.featherlight-inner {
+	display: none;
+}
+
+.featherlight .featherlight-close-icon {
+	/* position: centering vertical and horizontal */
+	position: absolute;
+	z-index: 9999;
+	top: 10px !important;
+    right: 10px !important;
+
+	/* dimensions: 25px x 25px */
+	line-height: 25px;
+	width: 25px;
+
+	/* styling */
+	cursor: pointer;
+	text-align: center;
+	font-family: Arial, sans-serif;
+	font-weight:bold;
+	outline:none !important;
+	background: #fff; /* Set the background in case it overlaps the content */
+	background: rgba(255, 255, 255, 0.3);
+	color: #000;
+	border: none;
+	padding: 0;
+    box-shadow: initial;
+}
+
+/* See http://stackoverflow.com/questions/16077341/how-to-reset-all-default-styles-of-the-html5-button-element */
+.featherlight .featherlight-close-icon::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+.featherlight .featherlight-image {
+	/* styling */
+	width: 100%;
+}
+
+
+.featherlight-iframe .featherlight-content {
+	/* removed the border for image croping since iframe is edge to edge */
+	border-bottom: 0;
+	padding: 0;
+	-webkit-overflow-scrolling: touch;
+}
+
+.featherlight iframe {
+	/* styling */
+	border: none;
+}
+
+.featherlight * { /* See https://github.com/noelboss/featherlight/issues/42 */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* handling phones and small screens */
+@media only screen and (max-width: 1024px) {
+	.featherlight .featherlight-content {
+		/* dimensions: maximize lightbox with for small screens */
+		margin-left: 0;
+		margin-right: 0;
+		max-height: calc(100% - 60px);
+		max-width: calc(100% - 60px);
+		padding:0;
+
+		/*border-bottom: 10px solid transparent;*/
+	}
+}
+
+/* hide non featherlight items when printing */
+@media print {
+	html.with-featherlight > * > :not(.featherlight) {
+		display: none;
+	}
+}

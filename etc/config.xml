@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <splitpay>
+                <active>0</active>
+                <enabled_for>1</enabled_for>
+                <model>Simpl\Splitpay\Model\PaymentMethod</model>
+                <title>Simpl</title>
+                <description>Interest Free. Always.</description>
+                <!--<payment_action>authorize</payment_action>-->
+                <test_mode>1</test_mode>
+                <client_id backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <client_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <allowspecific>1</allowspecific>
+                <specificcountry>IN</specificcountry>
+                <new_order_status>pending</new_order_status>
+                <payment_success_order_status>processing</payment_success_order_status>
+                <sort_order>1</sort_order>
+                <enable_popup_product_page>0</enable_popup_product_page>
+                <enable_popup_cart_page>0</enable_popup_cart_page>
+                <enable_popup_checkout_page>0</enable_popup_checkout_page>
+                <popup>https://cdn.getsimpl.com/images/pay_in_3/interstitial_1.jpg</popup>
+                <product_page_font_weight>400</product_page_font_weight>
+                <product_page_font_size>12</product_page_font_size>
+                <cart_page_font_weight>400</cart_page_font_weight>
+                <cart_page_font_size>12</cart_page_font_size>
+                <checkout_page_font_weight>400</checkout_page_font_weight>
+                <checkout_page_font_size>12</checkout_page_font_size>
+            </splitpay>
+        </payment>
+    </default>
+</config>

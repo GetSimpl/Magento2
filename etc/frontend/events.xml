@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="layout_generate_blocks_after">
+        <observer name="remove_popup_block" instance="Simpl\Splitpay\Model\Observer\RemoveBlock" />
+    </event>
+    <event name="controller_action_postdispatch">
+        <observer name="simpl_splitpay_event_tracking" instance="Simpl\Splitpay\Model\Observer\EventTrack" />
+    </event>
+    <event name="checkout_cart_product_add_after">
+        <observer name="simpl_splitpay_event_tracking_addtocart" instance="Simpl\Splitpay\Model\Observer\EventTrack" />
+    </event>
+    <event name="checkout_submit_all_after">
+        <observer name="simpl_splitpay_event_tracking_orderplaced" instance="Simpl\Splitpay\Model\Observer\EventTrack" />
+    </event>
+    <event name="layout_load_before">
+        <observer name="simpl_splitpay_addcustomproducthandle" instance="Simpl\Splitpay\Model\Observer\AddProductLayoutUpdateHandleObserver" />
+    </event>
+</config>

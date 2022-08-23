@@ -1,0 +1,50 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <label for="splitpay">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <span data-bind="text: getTitle()" style="font-weight: 600; font-size: 16px;"></span>
+        <img src="https://getsimpl.com/images/web-frontend/svgs/logo-blue.svg" style=" float: right; width: 60px; ">
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar splitpaycheckoutaction">
+            <div class="field">
+                <div class="control _with-tooltip">
+                    <div class="field-tooltip toggle">
+                        <span class="field-tooltip-action action-help" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown':{'activeClass': '_active'}}"></span>
+                        <div class="field-tooltip-content" data-target="dropdown" data-bind="html: getDescription()"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="primary">
+                <button class="action primary checkout"
+                    type="submit"
+                    data-bind="
+                    click: placeOrder,
+                    attr: {title: $t('Pay with Simpl')},
+                    css: {disabled: !isPlaceOrderActionAllowed()},
+                    enable: (getCode() == isChecked())
+                    ">
+                    <span data-bind="i18n: 'Pay with Simpl'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
