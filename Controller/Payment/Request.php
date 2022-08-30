@@ -80,7 +80,7 @@ class Request extends \Magento\Framework\App\Action\Action
                 $items = $order->getAllVisibleItems();
                 foreach ($items as $item) {
                     $itemArr[] = [
-                        'quantity' => $item->getQtyOrdered(),
+                        'quantity' => (int) $item->getQtyOrdered(),
                         'rate_per_item' => (int) (round($item->getPriceInclTax(), 2) * 100),
                         'sku' => $item->getSku()
                     ];
