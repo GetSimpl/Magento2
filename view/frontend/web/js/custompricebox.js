@@ -46,10 +46,13 @@ define([
 
                         var minPriceLimit = window.minPriceLimit!='' ? parseInt(window.minPriceLimit) : '';
                         var maxPriceLimit = parseInt(window.maxPriceLimit);
+                        var payinThreeModel = 'https://d19ud5ez64hf3q.cloudfront.net/popup/index.html?price='+ price.final;
                         if(priceCode=='baseOldPrice') {
                             $('#simplprice').text(utils.formatPrice(price.final, priceFormat));
+                            $('.simpl-popup-link').attr('href',payinThreeModel);
                         }else{
                             $('#simplprice').text(utils.formatPrice(finalPriceValue, priceFormat));
+                            $('.simpl-popup-link').attr('href',payinThreeModel);
                         }
 
 
@@ -62,15 +65,19 @@ define([
                                 }
                                 if(priceCode=='baseOldPrice') {
                                     $('#simplprice').text(utils.formatPrice(price.final, priceFormat));
+                                    $('.simpl-popup-link').attr('href',payinThreeModel);
                                 }else{
                                     $('#simplprice').text(utils.formatPrice(finalPriceValue, priceFormat));
+                                    $('.simpl-popup-link').attr('href',payinThreeModel);
                                 }
                             } else {
                                 $('div.splitpay').show();
                                 if(priceCode=='baseOldPrice') {
                                     $('#simplprice').text(utils.formatPrice(price.final, priceFormat));
+                                    $('.simpl-popup-link').attr('href',payinThreeModel);
                                 }else{
                                     $('#simplprice').text(utils.formatPrice(finalPriceValue, priceFormat));
+                                    $('.simpl-popup-link').attr('href',payinThreeModel);
                                 }
                             }
                         }else{
