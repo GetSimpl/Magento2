@@ -243,7 +243,15 @@ html.with-featherlight {
 		display: none;
 	}
 }
+.splitpay svg, body.checkout-cart-index .splitpay svg, body.checkout-index-index .splitpay svg {
+	width: 55px;
+	vertical-align: middle;
+	margin-left: 5px;
+}
 
+.simpl-popup-link svg, body.checkout-cart-index .simpl-popup-link svg, body.checkout-index-index .simpl-popup-link svg {
+	width: 15px;
+}
 .featherlight .featherlight-content:before {
     display: none!important;
 }
