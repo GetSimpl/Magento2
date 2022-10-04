@@ -8,7 +8,7 @@ body.checkout-index-index .splitpaycheckoutaction .action.primary{margin-right: 
 body.checkout-index-index .splitpaycheckoutaction .action.primary, body.checkout-index-index .splitpaycheckoutaction .action.primary:hover{background: #00D1C1; border: 1px solid #00D1C1;}
 
 @media (max-width: 767px) {
-    body.checkout-index-index .splitpaycheckoutaction .action.primary{margin-right: 0px; width : 82%;}
+	body.checkout-index-index .splitpaycheckoutaction .action.primary{margin-right: 0px; width : 82%;}
 }
 
 html.with-featherlight {
@@ -73,8 +73,8 @@ html.with-featherlight {
 .featherlight .featherlight-content img{
 	z-index: 1;
 	position:relative;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
 .featherlight-previous,
@@ -142,8 +142,8 @@ html.with-featherlight {
 	margin-left: 5%;
 	margin-right: 5%;
 	max-height: 95%;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 	border-radius: 10px;
 
 	/* styling */
@@ -168,27 +168,29 @@ html.with-featherlight {
 }
 
 .featherlight .featherlight-close-icon {
-    /* position: centering vertical and horizontal */
-    position: absolute;
-    z-index: 9999;
-    /* dimensions: 25px x 25px */
-    line-height: 25px;
-    width: 25px;
+	/* position: centering vertical and horizontal */
+	position: absolute;
+	z-index: 9999;
+	/* dimensions: 25px x 25px */
+	line-height: 25px;
+	width: 60px!important;
 
-    /* styling */
-    cursor: pointer;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-weight:bold;
-    outline:none !important;
-    background: #47546a!important; /* Set the background in case it overlaps the content */
-    background: #47546a;
-    color: #FFF!important;;
-    border: none;
-    padding: 0;
-    font-size: 23px;
-    right: 23px!important;
-    top: 25px!important;
+	/* styling */
+	cursor: pointer;
+	text-align: center;
+	font-family: Arial, sans-serif;
+	font-weight:bold;
+	outline:none !important;
+	background: #47546a!important; /* Set the background in case it overlaps the content */
+	background: #47546a;
+	color: #FFF!important;;
+	border: none;
+	padding: 0;
+	font-size: 23px;
+	right: 5px!important;
+	top: 7px!important;
+	height: 60px!important;
+	opacity: 0;
 }
 
 /* See http://stackoverflow.com/questions/16077341/how-to-reset-all-default-styles-of-the-html5-button-element */
@@ -208,8 +210,9 @@ html.with-featherlight {
 	border-bottom: 0;
 	padding: 0;
 	-webkit-overflow-scrolling: touch;
-    max-height: 662px!important;
-    overflow: hidden!important;
+	max-height: 662px!important;
+	overflow: hidden!important;
+	border-radius: 0!important;
 }
 
 .featherlight iframe {
@@ -253,5 +256,5 @@ html.with-featherlight {
 	width: 15px;
 }
 .featherlight .featherlight-content:before {
-    display: none!important;
+	display: none!important;
 }
