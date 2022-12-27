@@ -15,16 +15,25 @@ class SplitpayCheckValidCartAmount implements ObserverInterface
      */
     protected $cart;
 
+    /**
+     * @var Config
+     */
     protected $configSplitpay;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
 
     /**
      * PaymentMethodAvailable constructor.
      * @param Cart $cart
      */
-    public function __construct(Cart $cart, Config $configSplitpay)
+    public function __construct(Cart                                       $cart, Config $configSplitpay,
+                                \Magento\Store\Model\StoreManagerInterface $storeManager)
     {
         $this->cart = $cart;
         $this->configSplitpay = $configSplitpay;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -35,16 +44,27 @@ class SplitpayCheckValidCartAmount implements ObserverInterface
     public function execute(Observer $observer)
     {
         $paymentMethod = $observer->getEvent()->getMethodInstance()->getCode();
-        $cartFinalAmount = $this->cart->getQuote()->getGrandTotal();
+        $getCartData = $this->cart;
+        $cartFinalAmount = $getCartData->getQuote()->getGrandTotal();
 
-        if ($paymentMethod == "splitpay") {
+        if ($paymentMethod == $this->configSplitpay->getPaymentMethodCode()) {
+
+            $checkResult = $observer->getEvent()->getResult();
+            $billingCountry = $getCartData->getQuote()->getBillingAddress()->getCountryId();
+            $validateSplitPayavability = $this->configSplitpay->checkCountryCurrencyCriteria($billingCountry);
+
+            if (!$validateSplitPayavability) {
+                return $checkResult->setData('is_available', false);
+            }
             $minPrice = $this->configSplitpay->getMinPriceConfig();
             $maxPrice = $this->configSplitpay->getMaxPriceValue();
-            $checkResult = $observer->getEvent()->getResult();
-            if ($cartFinalAmount >= $minPrice && $cartFinalAmount <= $maxPrice) {
-                $checkResult->setData('is_available', true);
+
+            if (empty($minPrice) && empty($maxPrice)) {
+                return $checkResult->setData('is_available', true);
+            } else if ($cartFinalAmount >= $minPrice && $cartFinalAmount <= $maxPrice) {
+                return $checkResult->setData('is_available', true);
             } else {
-                $checkResult->setData('is_available', false);
+                return $checkResult->setData('is_available', false);
             }
         }
     }

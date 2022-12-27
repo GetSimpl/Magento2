@@ -5,8 +5,14 @@ namespace Simpl\Splitpay\Model;
 class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
 {
 
+    /**
+     * @var Config
+     */
     protected $config;
 
+    /**
+     * @param Config $config
+     */
     public function __construct(
         \Simpl\Splitpay\Model\Config $config
     )
@@ -14,6 +20,9 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
         $this->config = $config;
     }
 
+    /**
+     * @return array
+     */
     public function getConfig()
     {
         if (!$this->config->isActive()) {

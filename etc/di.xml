@@ -20,5 +20,9 @@
             </argument>
         </arguments>
     </type>
-
+    <type name="Simpl\Splitpay\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Simpl\Splitpay\Model\Session\Storage</argument>
+        </arguments>
+    </type>
 </config>

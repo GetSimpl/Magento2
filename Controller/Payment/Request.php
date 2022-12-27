@@ -6,14 +6,44 @@ use Magento\Framework\Controller\ResultFactory;
 class Request extends \Magento\Framework\App\Action\Action
 {
 
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $checkoutSession;
+    /**
+     * @var \Simpl\Splitpay\Model\Config
+     */
     protected $config;
+    /**
+     * @var \Simpl\Splitpay\Model\Airbreak
+     */
     protected $airbreak;
+    /**
+     * @var
+     */
     protected $_helper;
+    /**
+     * @var \Magento\Sales\Model\OrderFactory
+     */
     protected $orderFactory;
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $_messageManager;
+    /**
+     * @var \Magento\Framework\HTTP\Client\Curl
+     */
     protected $curl;
 
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Simpl\Splitpay\Model\Config $config
+     * @param \Simpl\Splitpay\Model\Airbreak $airbreak
+     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Checkout\Model\Session $checkoutSession,
@@ -35,6 +65,9 @@ class Request extends \Magento\Framework\App\Action\Action
         $this->curl = $curl;
     }
 
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         try {
@@ -87,7 +120,8 @@ class Request extends \Magento\Framework\App\Action\Action
                 }
 
                 $requestParam['items'] = $itemArr;
-                if ($this->config->isTestMode()) {
+                $testMode = $this->config->isTestMode();
+                if ($testMode != 'production') {
                     $requestParam['mock_eligibility_response'] = 'eligibility_success';
                     $requestParam['mock_eligibility_amount_in_paise'] = 500000;
                 }

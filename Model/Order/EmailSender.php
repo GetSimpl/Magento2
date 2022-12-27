@@ -12,12 +12,35 @@ use Magento\Framework\Event\ManagerInterface;
 
 class EmailSender extends OrderSender
 {
+    /**
+     * @var string
+     */
     protected $methodCode = \Simpl\Splitpay\Model\PaymentMethod::METHOD_CODE;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     protected $logger;
+    /**
+     * @var OrderResource
+     */
     protected $orderResource;
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
     protected $globalConfig;
 
+    /**
+     * @param Template $templateContainer
+     * @param OrderIdentity $identityContainer
+     * @param Order\Email\SenderBuilderFactory $senderBuilderFactory
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param Renderer $addressRenderer
+     * @param PaymentHelper $paymentHelper
+     * @param OrderResource $orderResource
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $globalConfig
+     * @param ManagerInterface $eventManager
+     */
     public function __construct(
         Template $templateContainer,
         OrderIdentity $identityContainer,
@@ -46,6 +69,13 @@ class EmailSender extends OrderSender
         $this->globalConfig = $globalConfig;
     }
 
+    /**
+     * @param Order $order
+     * @param $forceSyncMode
+     * @param $flag
+     * @return bool
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function send(Order $order, $forceSyncMode = false, $flag = false)
     {
         $payment = $order->getPayment()->getMethodInstance()->getCode();

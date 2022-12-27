@@ -33,6 +33,11 @@ class Airbreak
         $this->simplLogger = $logger;
     }
 
+    /**
+     * @param $exception
+     * @param $data
+     * @return bool
+     */
     public function sendData($exception, $data = [])
     {
 
@@ -51,7 +56,7 @@ class Airbreak
             $body = [];
 
             $body['context'] = [
-                'environment' => $this->config->isTestMode() ? 'sandbox' : 'production',
+                'environment' => $this->config->isTestMode(),
                 'context' => 'error'
             ];
 
@@ -87,8 +92,8 @@ class Airbreak
                 $this->simplLogger->info(json_encode($body));
                 return true;
             }
-            $airBreakProjectId = $this->config->getConfigData('airbreakprojectid');
-            $airBreakProjectKey = $this->config->getConfigData('airbreakprojectkey');
+            $airBreakProjectId = '331901';
+            $airBreakProjectKey = '7369135ff3bb9c93250b4f90f47b3050';
 
             $url = 'https://api.airbrake.io/api/v3/projects/' . $airBreakProjectId . '/notices?key=' . $airBreakProjectKey;
             $this->curl->setOption(CURLOPT_MAXREDIRS, 10);

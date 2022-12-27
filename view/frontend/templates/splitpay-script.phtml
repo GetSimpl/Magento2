@@ -1,0 +1,25 @@
+<?php
+/** @var $viewModel \Simpl\Splitpay\ViewModel\SplitpayViewModel */
+
+$viewModel = $block->getViewModel();
+$simpl = $viewModel->simplConfig;
+$siteDomain = $simpl->getSiteDomain();
+$isTestMode = $simpl->isTestMode();
+$handle = $simpl->getRequestData()->getFullActionName();
+$getConfig = $simpl->identifyConfiguration();
+$splitPayConfigDomain = $simpl->urlByEnvironment();
+$visibleScriptPlaces = ['checkout_cart_index' => 'cart', 'catalog_product_view' => 'product', 'checkout_index_index' => 'checkout'];
+if (in_array($handle, array_keys($visibleScriptPlaces)) && $getConfig['widgetVersion']['widget_version'] == 'v2') {
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('readystatechange', (event) => {
+            if (document.readyState === "complete") {
+                const tag = document.createElement("script");
+                tag.async = true;
+                tag.src = `<?php echo $splitPayConfigDomain;?>api/v1/app/payments/widget/config?shop=<?php echo $siteDomain;?>`;
+                document.body.appendChild(tag)
+            }
+        });
+        window.pageType = '<?php echo $visibleScriptPlaces[$handle];?>';
+    </script>
+<?php } ?>
