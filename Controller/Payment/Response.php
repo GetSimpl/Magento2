@@ -65,6 +65,7 @@ class Response extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
+        $baseUrl = $this->_url->getBaseUrl();
         try {
             $param = $this->getRequest()->getParams();
             ksort($param);
@@ -89,7 +90,7 @@ class Response extends \Magento\Framework\App\Action\Action
                     $this->_checkoutSession->restoreQuote();
                     $this->_messageManager->addErrorMessage(__('Order canceled.'));
                     $response = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-                    $response->setUrl('/checkout/cart');
+                    $response->setUrl($baseUrl.'checkout/cart');
                 } elseif ($param['status'] == 'SUCCESS') {
                     $domain = $this->config->getApiDomain();
                     $url = $domain.'/api/v1/transaction_by_order_id/'.$param['order_id'].'/status';
@@ -109,7 +110,7 @@ class Response extends \Magento\Framework\App\Action\Action
                         $paymentMethod->postProcessing($order, $payment, $param);
 
                         $response = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-                        $response->setUrl('/checkout/onepage/success');
+                        $response->setUrl($baseUrl.'checkout/onepage/success');
                     } else {
                         throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
                     }
@@ -120,7 +121,7 @@ class Response extends \Magento\Framework\App\Action\Action
             $this->airbreak->sendData($e, []);
             $this->_messageManager->addErrorMessage(__($e->getMessage()));
             $response = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-            $response->setUrl('/checkout/cart');
+            $response->setUrl($baseUrl.'checkout/cart');
         }
 
         return $response;
