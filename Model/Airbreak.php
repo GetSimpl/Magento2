@@ -92,7 +92,7 @@ class Airbreak
                 $this->simplLogger->info(json_encode($body));
                 return true;
             }
-            $airBreakProjectId = '331901';
+            $airBreakProjectId = '337081';
             $airBreakProjectKey = '7369135ff3bb9c93250b4f90f47b3050';
 
             $url = 'https://api.airbrake.io/api/v3/projects/' . $airBreakProjectId . '/notices?key=' . $airBreakProjectKey;
