@@ -93,7 +93,7 @@ class Airbreak
                 return true;
             }
             $airBreakProjectId = '337081';
-            $airBreakProjectKey = '7369135ff3bb9c93250b4f90f47b3050';
+            $airBreakProjectKey = '1b2c8e8d98882cd47ef938208ff6a3e6';
 
             $url = 'https://api.airbrake.io/api/v3/projects/' . $airBreakProjectId . '/notices?key=' . $airBreakProjectKey;
             $this->curl->setOption(CURLOPT_MAXREDIRS, 10);
