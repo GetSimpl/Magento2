@@ -13,27 +13,97 @@ use Magento\Sales\Model\Order\Invoice;
 class PaymentMethod extends AbstractMethod
 {
 
-    const METHOD_CODE = 'splitpay';
+    /**
+     *
+     */
+    const METHOD_CODE = 'simplpayin3';
+    /**
+     *
+     */
     const CURRENCY = 'INR';
 
+    /**
+     * @var string
+     */
     protected $_code = self::METHOD_CODE;
+    /**
+     * @var bool
+     */
     protected $_canAuthorize = true;
+    /**
+     * @var bool
+     */
     protected $_canCapture = true;
+    /**
+     * @var bool
+     */
     protected $_canRefund = true;
+    /**
+     * @var bool
+     */
     protected $_canUseInternal = false;
+    /**
+     * @var bool
+     */
     protected $_canUseCheckout = true;
+    /**
+     * @var bool
+     */
     protected $_canRefundInvoicePartial = true;
+    /**
+     * @var bool
+     */
     protected $_canCapturePartial = true;
+    /**
+     * @var Config
+     */
     protected $config;
+    /**
+     * @var
+     */
     protected $_logger;
 
     // Operationals params
+    /**
+     * @var Order\Email\Sender\OrderSender
+     */
     protected $orderSender;
+    /**
+     * @var \Magento\Sales\Model\Service\InvoiceService
+     */
     protected $invoiceService;
+    /**
+     * @var \Magento\Framework\DB\Transaction
+     */
     protected $transaction;
+    /**
+     * @var Transaction\Builder
+     */
     protected $transactionbuilder;
+    /**
+     * @var \Magento\Framework\HTTP\Client\Curl
+     */
     protected $curl;
 
+    /**
+     * @param \Magento\Framework\Model\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
+     * @param \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory
+     * @param \Magento\Payment\Helper\Data $paymentData
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Payment\Model\Method\Logger $logger
+     * @param Config $config
+     * @param Order\Email\Sender\OrderSender $orderSender
+     * @param \Magento\Sales\Model\Service\InvoiceService $invoiceService
+     * @param \Magento\Framework\DB\Transaction $transaction
+     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     * @param Transaction\Builder $transactionbuilder
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param array $data
+     */
     public function __construct(
         \Magento\Framework\Model\Context                        $context,
         \Magento\Framework\Registry                             $registry,
@@ -151,6 +221,13 @@ class PaymentMethod extends AbstractMethod
         return $this;
     }
 
+    /**
+     * @param Order $order
+     * @param DataObject $payment
+     * @param $response
+     * @return void
+     * @throws \Exception
+     */
     public function postProcessing(
         Order      $order,
         DataObject $payment,

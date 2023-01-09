@@ -2,18 +2,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <splitpay>
+            <simplpayin3>
                 <active>0</active>
                 <enabled_for>1</enabled_for>
                 <model>Simpl\Splitpay\Model\PaymentMethod</model>
                 <title>Simpl</title>
                 <description>Interest Free. Always.</description>
                 <!--<payment_action>authorize</payment_action>-->
-                <test_mode>1</test_mode>
+                <test_mode>sandbox</test_mode>
                 <client_id backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <client_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <allowspecific>1</allowspecific>
                 <specificcountry>IN</specificcountry>
+                <specificcurrency>INR</specificcurrency>
                 <new_order_status>pending</new_order_status>
                 <payment_success_order_status>processing</payment_success_order_status>
                 <sort_order>1</sort_order>
@@ -27,7 +28,7 @@
                 <cart_page_font_size>12</cart_page_font_size>
                 <checkout_page_font_weight>400</checkout_page_font_weight>
                 <checkout_page_font_size>12</checkout_page_font_size>
-            </splitpay>
+            </simplpayin3>
         </payment>
     </default>
 </config>
