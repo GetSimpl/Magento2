@@ -81,7 +81,7 @@ class Response extends \Magento\Framework\App\Action\Action
                 http_build_query($param),
                 $this->config->getClientKey()
             );
-            if ($signature == $hash) {
+            if ($signature == $hash && isset($param['order_id'])) {
                 $orderId = $param['order_id'];
                 $order = $this->orderRepository->create()->loadByIncrementId($orderId);
 
@@ -111,7 +111,10 @@ class Response extends \Magento\Framework\App\Action\Action
 
                         $response = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
                         $response->setUrl($baseUrl.'checkout/onepage/success');
-                    } else {
+                    } else if(isset($response['error'])){
+                        $messageParse = 'There is some error while updating order status.';
+                        $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
+                        $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $param['order_id']);
                         throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
                     }
                 }
