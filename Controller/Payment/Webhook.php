@@ -159,7 +159,7 @@ class Webhook extends \Magento\Framework\App\Action\Action
                 http_build_query($param),
                 $this->config->getClientKey()
             );
-            if ($signature == $hash) {
+            if ($signature == $hash && isset($param['order_id'])) {
                 $orderId = $param['order_id'];
                 $order = $this->orderRepository->create()->loadByIncrementId($orderId);
 
@@ -184,8 +184,11 @@ class Webhook extends \Magento\Framework\App\Action\Action
                             $payment = $order->getPayment();
                             $paymentMethod = $order->getPayment()->getMethodInstance();
                             $paymentMethod->postProcessing($order, $payment, $param);
-                        } else {
+                        } elseif(isset($response['error'])){
                             $errorMsg = $response['error']['message'];
+                            $messageParse = 'There is some error while updating order status.';
+                            $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
+                            $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $param['order_id']);
                             throw new \Magento\Framework\Exception\LocalizedException(__($errorMsg));
                         }
 

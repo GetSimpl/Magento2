@@ -90,7 +90,7 @@ class Request extends \Magento\Framework\App\Action\Action
                     'order_id' => $this->checkoutSession->getLastRealOrderId(),
                     'amount_in_paise' => (int) (round($order->getGrandTotal(), 2) * 100),
                     'user' => [
-                        'phone_number' => ltrim($order->getBillingAddress()->getTelephone(), '0'),
+                        'phone_number' => preg_replace('/[^0-9]/', '',$order->getBillingAddress()->getTelephone()),
                         'email' => $order->getCustomerEmail(),
                         'first_name' => $order->getBillingAddress()->getFirstname(),
                         'last_name' => $order->getBillingAddress()->getLastname()
@@ -141,7 +141,10 @@ class Request extends \Magento\Framework\App\Action\Action
                 $response = json_decode($this->curl->getBody(), true);
                 if ($response['success']) {
                     $resultRedirect->setUrl($response['data']['redirection_url']);
-                } else {
+                } elseif(isset($response['error'])){
+                    $messageParse = 'Sorry, there was a problem preparing your payment.';
+                    $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
+                    $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $this->checkoutSession->getLastRealOrderId());
                     throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
                 }
             }
