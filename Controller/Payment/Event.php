@@ -6,10 +6,25 @@ use Magento\Framework\Controller\ResultFactory;
 class Event extends \Magento\Framework\App\Action\Action
 {
 
+    /**
+     * @var \Simpl\Splitpay\Model\EventTrack
+     */
     protected $eventTrack;
+    /**
+     * @var \Simpl\Splitpay\Model\Airbreak
+     */
     protected $airbreak;
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
     protected $session;
-    
+
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Simpl\Splitpay\Model\EventTrack $eventTrack
+     * @param \Simpl\Splitpay\Model\Airbreak $airbreak
+     * @param \Magento\Customer\Model\Session $session
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Simpl\Splitpay\Model\EventTrack $eventTrack,
@@ -24,6 +39,9 @@ class Event extends \Magento\Framework\App\Action\Action
         $this->session = $session;
     }
 
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         try {
@@ -34,15 +52,15 @@ class Event extends \Magento\Framework\App\Action\Action
             if ($customerSession->isLoggedIn()) {
                 $customerId = $customerSession->getCustomer()->getId();
             }
-            
-            $action = $param['action'];
+
+            $action = $param['action'] ?? 'action-not-came-from-merchant';
             unset($param['action']);
             $data = [
                 'user_id' => $customerId
             ];
             $data = array_merge($data, $param);
             $this->eventTrack->sendData($action, $data);
-            
+
             $responseContent = [
                 'message' => __("event track"),
                 'success' => 1

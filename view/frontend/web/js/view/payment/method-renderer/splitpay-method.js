@@ -16,11 +16,11 @@ define(
         'use strict';
 
         return Component.extend({
-            defaults: {             
+            defaults: {
                 redirectAfterPlaceOrder: false,
                 template: 'Simpl_Splitpay/payment/splitpay-form'
             },
-            
+
             context: function() {
                 return this;
             },
@@ -30,7 +30,7 @@ define(
             },
 
             getCode: function() {
-                return 'splitpay';
+                return 'simplpayin3';
             },
 
             isActive: function() {
@@ -40,7 +40,7 @@ define(
             getTitle: function() {
                 return window.checkoutConfig.payment.splitpay.title;
             },
-            
+
             getDescription: function() {
                 return window.checkoutConfig.payment.splitpay.description;
             },
@@ -48,11 +48,11 @@ define(
             initObservable: function() {
                 var self = this._super();
                 return self;
-            },           
-            
+            },
+
             afterPlaceOrder: function () {
                 $.mage.redirect(url.build('splitpay/payment/request'));
-            }                       
-        });               
+            }
+        });
     }
 );

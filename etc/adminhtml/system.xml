@@ -1,109 +1,137 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="payment">
-            <group id="splitpay" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="simplpayin3" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>Simpl</label>
-                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enabled_for" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enabled_for" translate="label" type="select" sortOrder="15" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Enabled For</label>
                     <source_model>Simpl\Splitpay\Model\Source\EnabledFor</source_model>
                 </field>
-                <field id="airbreakintegration" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+
+                <field id="airbreakintegration" translate="label" type="select" sortOrder="16" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
                     <label>Enable AirBreak Integration (Error Tracking)</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment> <![CDATA[If the dropdown value is YES then specificly scenario error will be track on Simpl AirBreak server. <br> NOTE : If you selected <b>YES</b> then please reachout simpl team for Airbreak credentials <br> If you Select <b>NO</b> We will log all errors in logs.]]></comment>
+                    <comment>
+                        <![CDATA[If the dropdown value is YES then specificly scenario error will be track on Simpl AirBreak server.]]></comment>
                 </field>
 
-                <field id="airbreakprojectid" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>AirBreak Project ID</label>
-                    <depends>
-                        <field id="airbreakintegration">1</field>
-                    </depends>
-                </field>
-
-                <field id="airbreakprojectkey" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>AirBreak Project Key</label>
-                    <depends>
-                        <field id="airbreakintegration">1</field>
-                    </depends>
-                </field>
-
-                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="description" translate="label" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="description" translate="label" type="textarea" sortOrder="25" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Description</label>
                 </field>
-                <field id="test_mode" translate="label" sortOrder="30" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Enable test mode</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <field id="test_mode" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Environment mode</label>
+                    <source_model>Simpl\Splitpay\Model\Source\EnvironmentList</source_model>
+                    <comment>Select the Environment mode</comment>
                 </field>
-                <field id="client_id" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+
+                <field id="client_id" translate="label" type="obscure" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Client ID</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                    <comment>Test/Live Client ID</comment>
+                    <comment>Enter the Merchant Client ID detail as per your Environment</comment>
                 </field>
-                <field id="client_key" translate="label" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="client_key" translate="label" type="obscure" sortOrder="50" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Client Secret Key</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                    <comment>Test/Live Client Secret Key</comment>
+                    <comment>Enter the Merchant Client Secret detail as per your Environment</comment>
                 </field>
-                <field id="new_order_status" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="new_order_status" translate="label" type="select" sortOrder="60" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Payment Pending Order Status</label>
                     <source_model>Simpl\Splitpay\Model\Source\PaymentStatus</source_model>
                 </field>
-                <field id="payment_success_order_status" translate="label" type="select" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="payment_success_order_status" translate="label" type="select" sortOrder="65"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Payment Success Order Status</label>
                     <source_model>Simpl\Splitpay\Model\Source\PaymentStatus</source_model>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="sort_order" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Sort Order</label>
                 </field>
-                <field id="enable_popup_product_page" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enable_popup_product_page" translate="label" type="select" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Enable popup at product page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_popup_cart_page" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enable_popup_cart_page" translate="label" type="select" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Enable popup at checkout cart page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_popup_checkout_page" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enable_popup_checkout_page" translate="label" type="select" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Enable popup at checkout page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="popup" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="popup" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Popup</label>
                     <comment>Enter CDN URL</comment>
                 </field>
-                <field id="product_page_font_weight" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="product_page_font_weight" translate="label" type="text" sortOrder="120" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Product Page Font Weight</label>
                 </field>
-                <field id="product_page_font_size" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="product_page_font_size" translate="label" type="text" sortOrder="130" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Product Page Font Size</label>
                     <comment>Please enter font size in pixel</comment>
                 </field>
-                <field id="cart_page_font_weight" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="cart_page_font_weight" translate="label" type="text" sortOrder="140" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Cart Page Font Weight</label>
                 </field>
-                <field id="cart_page_font_size" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="cart_page_font_size" translate="label" type="text" sortOrder="150" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Cart Page Font Size</label>
                     <comment>Please enter font size in pixel</comment>
                 </field>
-                <field id="checkout_page_font_weight" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="checkout_page_font_weight" translate="label" type="text" sortOrder="160" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Checkout Page Font Weight</label>
                 </field>
-                <field id="checkout_page_font_size" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="checkout_page_font_size" translate="label" type="text" sortOrder="170" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
                     <label>Checkout Page Font Size</label>
                     <comment>Please enter font size in pixel</comment>
                 </field>
-                <field id="min_price_limit" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Minimum Price Limit (Integer Numbers only)</label>
+                <field id="min_price_limit" translate="label" type="text" sortOrder="170" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Minimum Price Limit</label>
+                    <validate>validate-digits validate-zero-or-greater validate-not-negative-number
+                        validate-digits-range digits-range-0-25000
+                    </validate>
                     <comment> <![CDATA[
-                    Minimum Price Limit To Display SplitPay Widget And Payment Method On Checkout <br> <b>NOTE :</b> Max Price Limit is 25000 INR]]></comment>
+                    Minimum Price Limit To Display SplitPay Widget And Payment Method On Checkout,  <br> Enter price value between 0 - 25,000 <br>
+                    <b>NOTE :</b> Max Price Limit is 25,000 <br> <b>When you insert MIN Price, Make sure you add the MAX price as well !! ]]></comment>
+                </field>
+                <field id="max_price_limit" translate="label" type="text" sortOrder="170" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Maximum Price Limit</label>
+                    <validate>validate-digits validate-zero-or-greater validate-not-negative-number
+                        validate-digits-range digits-range-0-25000
+                    </validate>
+                    <comment> <![CDATA[
+                    Maximum Price Limit To Display SplitPay Widget And Payment Method On Checkout <br> Enter price value between 0 - 25,000 <br>
+                    <b>NOTE :</b> Max Price Limit is 25,000 <br><b>When you insert MAX Price, Make sure you add the MIN price as well !!</b>]]></comment>
                 </field>
             </group>
         </section>
