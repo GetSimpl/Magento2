@@ -258,3 +258,9 @@ html.with-featherlight {
 .featherlight .featherlight-content:before {
 	display: none!important;
 }
+.splitpay-tooltip-checkout {
+    display: inline-block;
+}
+.splitpay-tooltip-checkout .field-tooltip.toggle {
+    margin-left: 0;
+}
