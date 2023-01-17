@@ -57,7 +57,8 @@ class Airbreak
 
             $body['context'] = [
                 'environment' => $this->config->isTestMode(),
-                'context' => 'error'
+                'context' => 'error',
+                'hostname' => $this->config->getSiteDomain()
             ];
 
             $body['params'] = [
@@ -125,7 +126,8 @@ class Airbreak
 
             $body['context'] = [
                 'environment' => $this->config->isTestMode(),
-                'context' => 'error'
+                'context' => 'error',
+                'hostname' => $this->config->getSiteDomain()
             ];
 
             $body['params'] = [

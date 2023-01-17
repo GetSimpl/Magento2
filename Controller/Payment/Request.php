@@ -142,6 +142,7 @@ class Request extends \Magento\Framework\App\Action\Action
                 if ($response['success']) {
                     $resultRedirect->setUrl($response['data']['redirection_url']);
                 } elseif(isset($response['error'])){
+                    $this->checkoutSession->restoreQuote();
                     $messageParse = 'Sorry, there was a problem preparing your payment.';
                     $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
                     $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $this->checkoutSession->getLastRealOrderId());
