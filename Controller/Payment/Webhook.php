@@ -185,13 +185,11 @@ class Webhook extends \Magento\Framework\App\Action\Action
                             $paymentMethod = $order->getPayment()->getMethodInstance();
                             $paymentMethod->postProcessing($order, $payment, $param);
                         } elseif(isset($response['error'])){
-                            $errorMsg = $response['error']['message'];
                             $messageParse = 'There is some error while updating order status.';
                             $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
                             $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $param['order_id']);
-                            throw new \Magento\Framework\Exception\LocalizedException(__($errorMsg));
+                            throw new \Magento\Framework\Exception\LocalizedException(__($messageParse));
                         }
-
                         return;
                     }
                 }

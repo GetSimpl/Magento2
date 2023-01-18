@@ -115,7 +115,7 @@ class Response extends \Magento\Framework\App\Action\Action
                         $messageParse = 'There is some error while updating order status.';
                         $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
                         $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $param['order_id']);
-                        throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
+                        throw new \Magento\Framework\Exception\LocalizedException(__($messageParse));
                     }
                 }
             }
@@ -126,7 +126,6 @@ class Response extends \Magento\Framework\App\Action\Action
             $response = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
             $response->setUrl($baseUrl.'checkout/cart');
         }
-
         return $response;
     }
 }

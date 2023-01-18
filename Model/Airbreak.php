@@ -195,10 +195,8 @@ class Airbreak
             $response = json_decode($this->curl->getBody(), true);
             return true;
         }catch (\Exception $e) {
-            die($e->getMessage());
             return false;
         }
-
     }
 
     public function isJson($var) {

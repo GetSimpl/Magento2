@@ -146,7 +146,7 @@ class Request extends \Magento\Framework\App\Action\Action
                     $messageParse = 'Sorry, there was a problem preparing your payment.';
                     $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
                     $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $this->checkoutSession->getLastRealOrderId());
-                    throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
+                    throw new \Magento\Framework\Exception\LocalizedException(__($messageParse));
                 }
             }
         } catch (\Exception $e) {
@@ -154,7 +154,6 @@ class Request extends \Magento\Framework\App\Action\Action
             $this->airbreak->sendData($e, []);
             $resultRedirect->setpath('checkout/cart');
         }
-
         return $resultRedirect;
     }
 }
