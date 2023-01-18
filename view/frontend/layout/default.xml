@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceContainer name="after.body.start">
+        <block class="Magento\Framework\View\Element\Template" name="splitpay.simpl.template" after="checkout.header.wrapper"
+               template="Simpl_Splitpay::splitpay-script.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Simpl\Splitpay\ViewModel\SplitpayViewModel</argument>
+            </arguments>
+        </block>
+    </referenceContainer>
+</page>
+

@@ -6,14 +6,44 @@ use Magento\Framework\Controller\ResultFactory;
 class Request extends \Magento\Framework\App\Action\Action
 {
 
+    /**
+     * @var \Magento\Checkout\Model\Session
+     */
     protected $checkoutSession;
+    /**
+     * @var \Simpl\Splitpay\Model\Config
+     */
     protected $config;
+    /**
+     * @var \Simpl\Splitpay\Model\Airbreak
+     */
     protected $airbreak;
+    /**
+     * @var
+     */
     protected $_helper;
+    /**
+     * @var \Magento\Sales\Model\OrderFactory
+     */
     protected $orderFactory;
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
     protected $_messageManager;
+    /**
+     * @var \Magento\Framework\HTTP\Client\Curl
+     */
     protected $curl;
 
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Simpl\Splitpay\Model\Config $config
+     * @param \Simpl\Splitpay\Model\Airbreak $airbreak
+     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Checkout\Model\Session $checkoutSession,
@@ -35,6 +65,9 @@ class Request extends \Magento\Framework\App\Action\Action
         $this->curl = $curl;
     }
 
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         try {
@@ -57,7 +90,7 @@ class Request extends \Magento\Framework\App\Action\Action
                     'order_id' => $this->checkoutSession->getLastRealOrderId(),
                     'amount_in_paise' => (int) (round($order->getGrandTotal(), 2) * 100),
                     'user' => [
-                        'phone_number' => ltrim($order->getBillingAddress()->getTelephone(), '0'),
+                        'phone_number' => preg_replace('/[^0-9]/', '',$order->getBillingAddress()->getTelephone()),
                         'email' => $order->getCustomerEmail(),
                         'first_name' => $order->getBillingAddress()->getFirstname(),
                         'last_name' => $order->getBillingAddress()->getLastname()
@@ -87,7 +120,8 @@ class Request extends \Magento\Framework\App\Action\Action
                 }
 
                 $requestParam['items'] = $itemArr;
-                if ($this->config->isTestMode()) {
+                $testMode = $this->config->isTestMode();
+                if ($testMode != 'production') {
                     $requestParam['mock_eligibility_response'] = 'eligibility_success';
                     $requestParam['mock_eligibility_amount_in_paise'] = 500000;
                 }
@@ -107,8 +141,12 @@ class Request extends \Magento\Framework\App\Action\Action
                 $response = json_decode($this->curl->getBody(), true);
                 if ($response['success']) {
                     $resultRedirect->setUrl($response['data']['redirection_url']);
-                } else {
-                    throw new \Magento\Framework\Exception\LocalizedException(__($response['error']['message']));
+                } elseif(isset($response['error'])){
+                    $this->checkoutSession->restoreQuote();
+                    $messageParse = 'Sorry, there was a problem preparing your payment.';
+                    $backTrace = array('file'=>__FILE__,'line'=>__LINE__,'error'=>$response['error']);
+                    $this->airbreak->sendCustomAirbreakAlert($messageParse,$backTrace, $this->checkoutSession->getLastRealOrderId());
+                    throw new \Magento\Framework\Exception\LocalizedException(__($messageParse));
                 }
             }
         } catch (\Exception $e) {
@@ -116,7 +154,6 @@ class Request extends \Magento\Framework\App\Action\Action
             $this->airbreak->sendData($e, []);
             $resultRedirect->setpath('checkout/cart');
         }
-
         return $resultRedirect;
     }
 }

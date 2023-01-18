@@ -13,6 +13,10 @@ use Magento\Sales\Model\Order\Payment;
 
 class PaymentPlace extends Payment
 {
+    /**
+     * @return $this|PaymentPlace
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function place()
     {
         $this->_eventManager->dispatch('sales_order_payment_place_start', ['payment' => $this]);

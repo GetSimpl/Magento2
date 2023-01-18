@@ -36,6 +36,7 @@ class AddProductLayoutUpdateHandleObserver implements ObserverInterface
             $layoutUpdate = $layout->getUpdate();
 
             $remove = $this->config->isEnableAtProductPage();
+
             if ($remove != 0) {
                 $layoutUpdate->addHandle(static::LAYOUT_HANDLE_NAME);
             }
